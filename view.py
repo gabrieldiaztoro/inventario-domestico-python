@@ -58,4 +58,4 @@ def ver_item(id):
         for row in rows:
             ver_dados_individualmente.append(row)
 
-
+#Criando novo arquivo view, indo para o frontend
