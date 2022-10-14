@@ -57,3 +57,5 @@ def ver_item(id):
         rows = cur.fetchall()
         for row in rows:
             ver_dados_individualmente.append(row)
+
+
