@@ -7,7 +7,7 @@ con = lite.connect('dados.db')
 
 # CRUD CREATE READ UPDATE DELETE
 
-# inserir dados
+'''# inserir dados
 dados = ['sofa', 'sala de estar', 'vaso que comprei no mercado',
          'marca x', '27/08/2022', '500,00', 'xxxx', 'c:imagens']
 with con:
@@ -22,10 +22,10 @@ with con:
     cur = con.cursor()
     query = "UPDATE inventario SET nome=?, local=?, descricao=?, marca=?, data_da_compra=?, valor_da_compra=?, serie=?, imagem=? WHERE id=?"
     cur.execute(query, atualizar_dados)
-
+'''
 
 # Deletar dados
-deletar_dados = [1]
+deletar_dados = str(3)
 with con:
     cur = con.cursor()
     query = "DELETE FROM inventario WHERE id=?"
