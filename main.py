@@ -5,8 +5,6 @@ from PIL import Image, ImageTk
 from tkcalendar import Calendar, DateEntry
 from datetime import date
 
-from symbol import compound_stmt
-
 
 # importando cores
 cor0 = "#2e2d2b"   # Preto
@@ -106,12 +104,29 @@ l_serial.place(x=10, y=190)
 e_serial = Entry(frameMeio, width=30, justify='left', relief='solid')
 e_serial.place(x=130, y=191)
 
+
+# Criando botoes
+
+# botao carregar
 l_carregar = Label(frameMeio, text='Imagem do item', height=1,
                    anchor=NW, font=('Ivi 10 bold'), bg=cor01, fg=cor04)
 l_carregar.place(x=10, y=220)
-b_carregar = Button(frameMeio, text='carregar'.upper(
-), compound=CENTER, anchor=CENTER, font=('Ivi 10 bold'), bg=cor01, fg=cor04)
+
+b_carregar = Button(frameMeio, width=30, text='carregar'.upper(
+), compound=CENTER, anchor=CENTER, overrelief=RIDGE, font=('Ivi 8'), bg=cor01, fg=cor0)
 b_carregar.place(x=130, y=221)
+
+
+# botao inserir
+#primeiramente carregando imagem do botao
+img_add = Image.open('imagem_inserir.png')
+img_add = img_add.resize((20, 20))
+img_add = ImageTk.PhotoImage(img_add)
+
+b_inserir = Button(frameMeio, image=img_add, width=95, text='  Adicionar'.upper(
+), compound=LEFT, anchor=NW, overrelief=RIDGE, font=('Ivi 8'), bg=cor01, fg=cor0)
+b_inserir.place(x=330, y=10)
+
 
 # editando frame baixo
 
