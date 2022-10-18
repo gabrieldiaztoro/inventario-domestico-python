@@ -112,13 +112,13 @@ l_carregar = Label(frameMeio, text='Imagem do item', height=1,
                    anchor=NW, font=('Ivi 10 bold'), bg=cor01, fg=cor04)
 l_carregar.place(x=10, y=220)
 
-b_carregar = Button(frameMeio, width=30, text='carregar'.upper(
+b_carregar = Button(frameMeio, width=29, text='carregar'.upper(
 ), compound=CENTER, anchor=CENTER, overrelief=RIDGE, font=('Ivi 8'), bg=cor01, fg=cor0)
 b_carregar.place(x=130, y=221)
 
 
 # botao inserir
-#primeiramente carregando imagem do botao
+# primeiramente carregando imagem do botao
 img_add = Image.open('imagem_inserir.png')
 img_add = img_add.resize((20, 20))
 img_add = ImageTk.PhotoImage(img_add)
@@ -127,7 +127,60 @@ b_inserir = Button(frameMeio, image=img_add, width=95, text='  Adicionar'.upper(
 ), compound=LEFT, anchor=NW, overrelief=RIDGE, font=('Ivi 8'), bg=cor01, fg=cor0)
 b_inserir.place(x=330, y=10)
 
+# botao atualizar
+# primeiramente carregando imagem do botao
+img_atualizar = Image.open('imagem_atualizar.png')
+img_atualizar = img_atualizar.resize((20, 20))
+img_atualizar = ImageTk.PhotoImage(img_atualizar)
+
+b_atualizar = Button(frameMeio, image=img_atualizar, width=95, text='  Atualizar'.upper(
+), compound=LEFT, anchor=NW, overrelief=RIDGE, font=('Ivi 8'), bg=cor01, fg=cor0)
+b_atualizar.place(x=330, y=50)
+
+
+# botao excluir
+# primeiramente carregando imagem do botao
+img_excluir = Image.open('imagem_excluir.png')
+img_excluir = img_excluir.resize((20, 20))
+img_excluir = ImageTk.PhotoImage(img_excluir)
+
+b_excluir = Button(frameMeio, image=img_excluir, width=95, text='  Excluir'.upper(
+), compound=LEFT, anchor=NW, overrelief=RIDGE, font=('Ivi 8'), bg=cor01, fg=cor0)
+b_excluir.place(x=330, y=90)
+
+
+# botao visualizar
+# primeiramente carregando imagem do botao
+img_visualizar = Image.open('imagem_visualizar.png')
+img_visualizar = img_visualizar.resize((20, 20))
+img_visualizar = ImageTk.PhotoImage(img_visualizar)
+
+b_visualizar = Button(frameMeio, image=img_visualizar, width=95, text='  Visualizar'.upper(
+), compound=LEFT, anchor=NW, overrelief=RIDGE, font=('Ivi 8'), bg=cor01, fg=cor0)
+b_visualizar.place(x=330, y=221)
+
+# CRIANDO LABEL DE QUANTIDADE TOTAL
+l_total = Label(frameMeio, text='', width=14, height=2,
+                anchor=CENTER, font=('Ivi 17 bold'), bg=cor07, fg=cor01)
+l_total.place(x=450, y=17)
+
+l_total_ = Label(frameMeio, text='  Valor Total de todos os itens  ', height=1,
+                 anchor=NW, font=('Ivi 10 bold'), bg=cor07, fg=cor01)
+l_total_.place(x=450, y=12)
+
+
+# CRIANDO SEGUNDO LABEL
+l_qtd = Label(frameMeio, text='', width=14, height=2,
+              anchor=CENTER, font=('Ivi 17 bold'), bg=cor07, fg=cor01)
+l_qtd.place(x=450, y=90)
+
+l_qtd_ = Label(frameMeio, text='  Quantidade total de itens  ', height=1,
+               anchor=NW, font=('Ivi 10 bold'), bg=cor07, fg=cor01)
+l_qtd_.place(x=450, y=92)
+
 
 # editando frame baixo
+
+
 
 janela.mainloop()
