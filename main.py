@@ -1,7 +1,8 @@
 from tkinter import *
 from tkinter import Tk, StringVar, ttk
 from tkinter import messagebox
-from webbrowser import BackgroundBrowser
+
+from tkinter import filedialog as fd
 
 # importando Pillow
 from PIL import Image, ImageTk
@@ -75,17 +76,31 @@ def inserir():
     inserir_form(lista_inserir)
     messagebox.showinfo('Sucesso', 'Os dados foram inseridos com sucesso')
 
-    nome.delete(0, 'end')
-    local.delete(0, 'end')
-    descricao.delete(0, 'end')
-    model.delete(0, 'end')
-    data.delete(0, 'end')
-    valor.delete(0, 'end')
-    serie.delete(0, 'end')
-    imagem.delete(0, 'end')
+    e_nome.delete(0, 'end')
+    e_local.delete(0, 'end')
+    e_descricao.delete(0, 'end')
+    e_model.delete(0, 'end')
+    e_calendario.delete(0, 'end')
+    e_valor.delete(0, 'end')
+    e_serial.delete(0, 'end')
 
-    for widget in frameMeio.winfo_children():
-        widget.destroy()
+
+# Funcao para escolher imagem
+global imagem, imagem_string, l_imagem
+
+
+def escolher_imagem():
+    global imagem, imagem_string, l_imagem
+
+    imagem = fd.askopenfilename()
+    imagem_string = imagem
+
+    imagem = Image.open(imagem)
+    imagem = imagem.resize((170, 170))
+    imagem = ImageTk.PhotoImage(imagem)
+
+    l_imagem = Label(frameMeio, image=imagem, bg=cor01, fg=cor04)
+    l_imagem.place(x=700, y=10)
 
 
 # Carregando Imagem FRAME CIMA
@@ -157,7 +172,7 @@ l_carregar = Label(frameMeio, text='Imagem do item', height=1,
                    anchor=NW, font=('Ivi 10 bold'), bg=cor01, fg=cor04)
 l_carregar.place(x=10, y=220)
 
-b_carregar = Button(frameMeio, width=29, text='carregar'.upper(
+b_carregar = Button(frameMeio, command=escolher_imagem, width=29, text='carregar'.upper(
 ), compound=CENTER, anchor=CENTER, overrelief=RIDGE, font=('Ivi 8'), bg=cor01, fg=cor0)
 b_carregar.place(x=130, y=221)
 
@@ -168,7 +183,7 @@ img_add = Image.open('imagem_inserir.png')
 img_add = img_add.resize((20, 20))
 img_add = ImageTk.PhotoImage(img_add)
 
-b_inserir = Button(frameMeio,command=inserir, image=img_add, width=95, text='  Adicionar'.upper(
+b_inserir = Button(frameMeio, command=inserir, image=img_add, width=95, text='  Adicionar'.upper(
 ), compound=LEFT, anchor=NW, overrelief=RIDGE, font=('Ivi 8'), bg=cor01, fg=cor0)
 b_inserir.place(x=330, y=10)
 
@@ -231,7 +246,7 @@ def mostrar():
     tabela_head = ['#Item', 'Nome',  'Sala/Área', 'Descrição',
                    'Marca/Modelo', 'Data da compra', 'Valor da compra', 'Número de série']
 
-    lista_itens = []
+    lista_itens = ver_form()
 
     tree = ttk.Treeview(frameBaixo, selectmode="extended",
                         columns=tabela_head, show="headings")
@@ -274,7 +289,7 @@ def mostrar():
     l_total['text'] = 'R$ {:,.2f}'.format(Total_valor)
     l_qtd['text'] = Total_itens
 
+    mostrar()
 
-mostrar()
 
 janela.mainloop()
