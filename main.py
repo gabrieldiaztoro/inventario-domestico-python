@@ -3,13 +3,13 @@ from tkinter import Tk, StringVar, ttk
 from tkinter import messagebox
 from webbrowser import BackgroundBrowser
 
-#importando Pillow
+# importando Pillow
 from PIL import Image, ImageTk
-#importando calendar
+# importando calendar
 from tkcalendar import Calendar, DateEntry
 from datetime import date
-#importando view
-from view import*
+# importando view
+from view import *
 
 # importando cores
 cor0 = "#2e2d2b"   # Preto
@@ -68,9 +68,24 @@ def inserir():
 
     lista_inserir = [nome, local, descricao, model, data, valor, serie, imagem]
     for i in lista_inserir:
-        if i=='':
+        if i == '':
             messagebox.showerror('Erro', 'Preencha todos os campos')
             return
+
+    inserir_form(lista_inserir)
+    messagebox.showinfo('Sucesso', 'Os dados foram inseridos com sucesso')
+
+    nome.delete(0, 'end')
+    local.delete(0, 'end')
+    descricao.delete(0, 'end')
+    model.delete(0, 'end')
+    data.delete(0, 'end')
+    valor.delete(0, 'end')
+    serie.delete(0, 'end')
+    imagem.delete(0, 'end')
+
+    for widget in frameMeio.winfo_children():
+        widget.destroy()
 
 
 # Carregando Imagem FRAME CIMA
@@ -153,7 +168,7 @@ img_add = Image.open('imagem_inserir.png')
 img_add = img_add.resize((20, 20))
 img_add = ImageTk.PhotoImage(img_add)
 
-b_inserir = Button(frameMeio, image=img_add, width=95, text='  Adicionar'.upper(
+b_inserir = Button(frameMeio,command=inserir, image=img_add, width=95, text='  Adicionar'.upper(
 ), compound=LEFT, anchor=NW, overrelief=RIDGE, font=('Ivi 8'), bg=cor01, fg=cor0)
 b_inserir.place(x=330, y=10)
 
@@ -209,59 +224,57 @@ l_qtd_ = Label(frameMeio, text='  Quantidade total de itens  ', height=1,
 l_qtd_.place(x=450, y=92)
 
 
-# editando frame baixo
-
 # tabela ---------------------------------------------------------
+def mostrar():
 
-# creating a treeview with dual scrollbars
-tabela_head = ['#Item', 'Nome',  'Sala/Área', 'Descrição',
-               'Marca/Modelo', 'Data da compra', 'Valor da compra', 'Número de série']
+    # creating a treeview with dual scrollbars
+    tabela_head = ['#Item', 'Nome',  'Sala/Área', 'Descrição',
+                   'Marca/Modelo', 'Data da compra', 'Valor da compra', 'Número de série']
 
-lista_itens = []
+    lista_itens = []
+
+    tree = ttk.Treeview(frameBaixo, selectmode="extended",
+                        columns=tabela_head, show="headings")
+
+    # vertical scrollbar
+    vsb = ttk.Scrollbar(frameBaixo, orient="vertical", command=tree.yview)
+
+    # horizontal scrollbar
+    hsb = ttk.Scrollbar(frameBaixo, orient="horizontal", command=tree.xview)
+
+    tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+    tree.grid(column=0, row=0, sticky='nsew')
+    vsb.grid(column=1, row=0, sticky='ns')
+    hsb.grid(column=0, row=1, sticky='ew')
+    frameBaixo.grid_rowconfigure(0, weight=12)
+
+    hd = ["center", "center", "center", "center",
+          "center", "center", "center", 'center']
+    h = [40, 150, 100, 160, 130, 100, 100, 100]
+    n = 0
+
+    for col in tabela_head:
+        tree.heading(col, text=col.title(), anchor=CENTER)
+        # adjust the column's width to the header string
+        tree.column(col, width=h[n], anchor=hd[n])
+        n += 1
+
+    # inserindo os itens dentro da tabela
+    for item in lista_itens:
+        tree.insert('', 'end', values=item)
+
+    quantidade = [8888, 88]
+
+    for iten in lista_itens:
+        quantidade.append(iten[6])
+
+    Total_valor = sum(quantidade)
+    Total_itens = len(quantidade)
+
+    l_total['text'] = 'R$ {:,.2f}'.format(Total_valor)
+    l_qtd['text'] = Total_itens
 
 
-tree = ttk.Treeview(frameBaixo, selectmode="extended",
-                    columns=tabela_head, show="headings")
-
-# vertical scrollbar
-vsb = ttk.Scrollbar(frameBaixo, orient="vertical", command=tree.yview)
-
-# horizontal scrollbar
-hsb = ttk.Scrollbar(frameBaixo, orient="horizontal", command=tree.xview)
-
-tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
-tree.grid(column=0, row=0, sticky='nsew')
-vsb.grid(column=1, row=0, sticky='ns')
-hsb.grid(column=0, row=1, sticky='ew')
-frameBaixo.grid_rowconfigure(0, weight=12)
-
-hd = ["center", "center", "center", "center",
-      "center", "center", "center", 'center']
-h = [40, 150, 100, 160, 130, 100, 100, 100]
-n = 0
-
-for col in tabela_head:
-    tree.heading(col, text=col.title(), anchor=CENTER)
-    # adjust the column's width to the header string
-    tree.column(col, width=h[n], anchor=hd[n])
-    n += 1
-
-
-# inserindo os itens dentro da tabela
-for item in lista_itens:
-    tree.insert('', 'end', values=item)
-
-
-quantidade = [8888, 88]
-
-for iten in lista_itens:
-    quantidade.append(iten[6])
-
-Total_valor = sum(quantidade)
-Total_itens = len(quantidade)
-
-l_total['text'] = 'R$ {:,.2f}'.format(Total_valor)
-l_qtd['text'] = Total_itens
-
+mostrar()
 
 janela.mainloop()
