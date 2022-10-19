@@ -1,10 +1,15 @@
-from importlib.metadata import entry_points
 from tkinter import *
 from tkinter import Tk, StringVar, ttk
+from tkinter import messagebox
+from webbrowser import BackgroundBrowser
+
+#importando Pillow
 from PIL import Image, ImageTk
+#importando calendar
 from tkcalendar import Calendar, DateEntry
 from datetime import date
-
+#importando view
+from view import*
 
 # importando cores
 cor0 = "#2e2d2b"   # Preto
@@ -43,7 +48,32 @@ frameBaixo = Frame(janela, width=1043, height=300,
                    pady=20, bg=cor01, relief=FLAT)
 frameBaixo.grid(row=2, column=0, pady=1, padx=1, sticky=NSEW)
 
-# Carregando Imagem
+# CRIAND FUNCOES, CONECTANDO COM O BACK END
+
+global tree
+# CRIANDO FUNCAO INSERIR
+
+
+def inserir():
+    global imagem, imagem_string, l_imagem
+
+    nome = e_nome.get()
+    local = e_local.get()
+    descricao = e_descricao.get()
+    model = e_model.get()
+    data = e_calendario.get()
+    valor = e_valor.get()
+    serie = e_serial.get()
+    imagem = imagem_string
+
+    lista_inserir = [nome, local, descricao, model, data, valor, serie, imagem]
+    for i in lista_inserir:
+        if i=='':
+            messagebox.showerror('Erro', 'Preencha todos os campos')
+            return
+
+
+# Carregando Imagem FRAME CIMA
 app_img = Image.open('imagem_cadastro.png')
 app_img = app_img.resize((45, 45))
 app_img = ImageTk.PhotoImage(app_img)
@@ -94,8 +124,8 @@ e_calendario.place(x=130, y=131)
 l_valor = Label(frameMeio, text='Valor da compra', height=1,
                 anchor=NW, font=('Ivi 10 bold'), bg=cor01, fg=cor04)
 l_valor.place(x=10, y=160)
-e_model = Entry(frameMeio, width=30, justify='left', relief='solid')
-e_model.place(x=130, y=161)
+e_valor = Entry(frameMeio, width=30, justify='left', relief='solid')
+e_valor.place(x=130, y=161)
 
 
 l_serial = Label(frameMeio, text='Número da série', height=1,
@@ -170,7 +200,7 @@ l_total_.place(x=450, y=12)
 
 
 # CRIANDO SEGUNDO LABEL
-l_qtd = Label(frameMeio, text='', width=14, height=2,
+l_qtd = Label(frameMeio, text='', width=14, height=2, pady=9,
               anchor=CENTER, font=('Ivi 17 bold'), bg=cor07, fg=cor01)
 l_qtd.place(x=450, y=90)
 
@@ -189,7 +219,6 @@ tabela_head = ['#Item', 'Nome',  'Sala/Área', 'Descrição',
 
 lista_itens = []
 
-global tree
 
 tree = ttk.Treeview(frameBaixo, selectmode="extended",
                     columns=tabela_head, show="headings")
